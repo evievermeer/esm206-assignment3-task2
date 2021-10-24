@@ -198,8 +198,11 @@ In the code chunk below, create a vector (using `c()`, as above) stored as `some
 
 ```{r}
 # Your code here: 
-
-
+some_dates <- c(03051994,01221990,04281988)
+some_dates_converted <- (mdy(some_dates))
+some_dates_converted                         
+                        
+class(some_dates_converted)
 ```
 
 #### 3C. Follow me
@@ -242,7 +245,12 @@ Starting from the `lakers` dataset, create a new dataset called `gasol_hookshots
 
 ```{r}
 # Your code here: 
-
+gasol_hookshots <- lakers %>% 
+  mutate(date_new = ymd(date)) %>% 
+  mutate(month_new = month(date_new)) %>% 
+  filter(player == "Pau Gasol", type == "hook") %>% 
+  group_by(month_new, type) %>% 
+  count(month_new)
 
 ```
 
@@ -276,8 +284,7 @@ storm_season <- storms %>% # Start from storms data
     month %in% c(3, 4, 5) ~ "spring", # "spring" if month is 3, 4, or 5
     month %in% c(6, 7, 8) ~ "summer", # "summer if month is 6, 7 or 8
     month %in% c(9, 10, 11) ~ "fall" # "fall" if month is 9, 10 or 11
-  )
-  )
+  ))
 
 # Run View(storm_season) in the Console to view the output data frame. See the new season column? That's been added using mutate & case_when()! 
 
@@ -292,7 +299,12 @@ Note: If you add another condition within `case_when()` that is `TRUE ~ "some th
 
 ```{r}
 # Your code here: 
-
+storms_danger <- storms %>% 
+  mutate(danger = case_when(
+    status %in% c("hurricane") ~ "high",
+    TRUE ~ "moderate"
+     
+  ))
 
 ```
 
